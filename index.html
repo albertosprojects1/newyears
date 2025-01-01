@@ -6,7 +6,61 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>
-   New Year Countdown
+   New Year Countdown /**
+ * Countdown to New Year's function.
+ * This function calculates the time remaining until New Year's Day in Central Time (CT).
+ * It updates the countdown every second and displays the remaining time in a user-friendly format.
+ */
+function countdownToNewYear() {
+    /**
+     * Calculates the time remaining until New Year's Day.
+     *
+     * @returns {Object} An object containing days, hours, minutes, and seconds until New Year.
+     */
+    function calculateTimeRemaining() {
+        // Get the current date and time in Central Time
+        const now = new Date();
+        const centralTimeOffset = -6; // Central Time is UTC-6
+        const utcNow = now.getTime() + (now.getTimezoneOffset() * 60000);
+        const centralTime = new Date(utcNow + (centralTimeOffset * 3600000));
+
+        // Set the target date for New Year's Day
+        const nextYear = centralTime.getFullYear() + 1;
+        const newYearDate = new Date(nextYear, 0, 1, 0, 0, 0); // January 1st, 00:00:00
+
+        // Calculate the difference in milliseconds
+        const difference = newYearDate - centralTime;
+
+        // Calculate time components
+        const seconds = Math.floor((difference / 1000) % 60);
+        const minutes = Math.floor((difference / 1000 / 60) % 60);
+        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+
+        return { days, hours, minutes, seconds };
+    }
+
+    /**
+     * Updates the countdown display in the HTML element with the specified ID.
+     *
+     * @param {string} elementId - The ID of the HTML element where the countdown will be displayed.
+     */
+    function updateCountdownDisplay(elementId) {
+        const countdownElement = document.getElementById(elementId);
+        const timeRemaining = calculateTimeRemaining();
+
+        // Format the countdown string
+        const countdownString = `${timeRemaining.days}d ${timeRemaining.hours}h ${timeRemaining.minutes}m ${timeRemaining.seconds}s`;
+        countdownElement.innerHTML = countdownString;
+    }
+
+    // Set the countdown to update every second
+    const countdownElementId = 'countdown'; // The ID of the HTML element to display the countdown
+    setInterval(() => updateCountdownDisplay(countdownElementId), 1000);
+}
+
+// Call the countdown function to start the countdown
+countdownToNewYear();
   </title>
 <!-- Bootstrap CSS -->
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
