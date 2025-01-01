@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>
+   New Year Countdown
+  </title>
+<!-- Bootstrap CSS -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<meta content="noindex, nofollow" name="robots"/>
+<meta content="noindex, nofollow" name="robots"/></head>
+<body>
+<div class="container text-center" id="main-content">
+<h1 class="mt-5">
+    Countdown to New Year!
+   </h1>
+<div class="display-4 mt-4" id="countdown">
+</div>
+<button class="btn btn-success mt-4" id="celebrateBtn">
+    Celebrate!
+   </button>
+</div>
+<div id="confetti">
+</div>
+<!-- Bootstrap & jQuery JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
+</script>
+</body>
+</html>
+
+
+<style>
+    body {
+    background: linear-gradient(135deg, #ffcc00, #ff6699);
+    overflow: hidden;
+    animation: backgroundAnimation 10s infinite alternate;
+}
+
+@keyframes backgroundAnimation {
+    0% { background-color: #ffcc00; }
+    100% { background-color: #ff6699; }
+}
+
+#main-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+#confetti {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    opacity: 0.8;
+    animation-name: fall;
+    animation-timing-function: linear;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
+</style>
+
+<script  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script  src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js"></script>
+<script>
+    (function() {
+        window.onload = function() {
+            parent.iframeLoaded();
+        }
+    })();
+    try {
+    $(document).ready(function() {
+    // Countdown Timer
+    const newYear = new Date("Jan 1, 2024 00:00:00").getTime();
+    const countdownElement = $('#countdown');
+
+    const countdownInterval = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = newYear - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdownElement.html(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+
+        if (distance < 0) {
+            clearInterval(countdownInterval);
+            countdownElement.html("Happy New Year!");
+        }
+    }, 1000);
+
+    // Celebrate Button
+    $('#celebrateBtn').click(function() {
+        createConfetti();
+        alert("Happy New Year! Wishing you love and happiness!");
+    });
+
+    // Confetti Animation
+    function createConfetti() {
+        for (let i = 0; i < 100; i++) {
+            let confetti = $('<div class="confetti"></div>');
+            confetti.css({
+                left: Math.random() * 100 + 'vw',
+                animationDuration: Math.random() * 2 + 1 + 's',
+                backgroundColor: getRandomColor()
+            });
+            $('#confetti').append(confetti);
+            setTimeout(() => {
+                confetti.remove();
+            }, 3000);
+        }
+    }
+
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+});
+    } catch (e) {
+        console.log("Error in JS code", e);
+    }
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</html>
+    
